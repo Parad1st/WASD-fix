@@ -91,7 +91,7 @@ namespace KeyboardHook
             {
                 int vkCode = Marshal.ReadInt32(lParam);
                 Keys key = (Keys)vkCode;
-                if (key == Keys.A || key == Keys.D || key == Keys.W || key == Keys.S) // Тут прописанно WASD, но ты можешь поменять на своё
+                if (key == Keys.A || key == Keys.D) // Тут прописанно WASD, но ты можешь поменять на своё
                 {
                     if (wParam == (IntPtr)WM_KEYDOWN)
                     {
