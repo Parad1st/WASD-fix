@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices;
@@ -23,45 +23,16 @@ namespace KeyboardHook
             Application.SetCompatibleTextRenderingDefault(false);
             // Трей меню
             trayMenu = new ContextMenuStrip();
-            trayMenu.Items.Add("Запустить", null, LaunchFix);
-            trayMenu.Items.Add("Остановить", null, DeactivateFix);
             trayMenu.Items.Add("Выход", null, ExitFix);
             // Иконка трея
             trayIcon = new NotifyIcon();
             trayIcon.Text = "WASD fix";
             trayIcon.Icon = new Icon("Resources/Parad1st_keys.ico"); // Иконка взята с какого-то сайта
-
+            _hookID = SetFix(_proc); // Не удаляй, а то не заработает
             trayIcon.ContextMenuStrip = trayMenu;
             trayIcon.Visible = true;
 
             Application.Run();
-        }
-
-        private static void LaunchFix(object sender, EventArgs e) // Запустить
-        {
-            if (_hookID == IntPtr.Zero)
-            {
-                _hookID = SetFix(_proc);
-                MessageBox.Show("WASD fix активирован", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                MessageBox.Show("WASD fix уже активирован", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
-
-        private static void DeactivateFix(object sender, EventArgs e)  // Остановить
-        {
-            if (_hookID != IntPtr.Zero)
-            {
-                UnhookWindowsHookEx(_hookID);
-                _hookID = IntPtr.Zero;
-                MessageBox.Show("WASD fix выключен.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                MessageBox.Show("WASD fix не активирован.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
         }
 
         private static void ExitFix(object sender, EventArgs e) // Выход
